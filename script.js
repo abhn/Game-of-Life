@@ -9,13 +9,6 @@
 	    Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
  */
 
-/* TODO
-	1. function to detect how many living neighbours a cell has [done]
-    2. implement step function to step into the next generation
- 
-
- */
-
 window.onload = main;
 
 // board - 500x500
