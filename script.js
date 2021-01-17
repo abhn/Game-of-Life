@@ -146,7 +146,6 @@ function numberOfNeighbours(row, col) {
 	if(row < ROWS-1 && col < COLS-1 && dataMatrix[row+1][col+1] == 1) {
 		count += 1;
 	}
-	console.log(row, col, count);
 	return count;
 }
 
