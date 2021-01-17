@@ -45,7 +45,16 @@ function main() {
 
 
 
+
+
+
+
+
+// clears the canvas and renders a fresh grid with dead/living cells
 function drawGrid() {
+	ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+	// render grid lines
 	for(i=1; i<ROWS; i++) {
 		ctx.beginPath();
 		ctx.moveTo(i*WIDTH_X, START_Y);
@@ -55,28 +64,24 @@ function drawGrid() {
 		ctx.stroke();
 	}
 
+	// render alive cells from dataMatrix
 	for(i=0; i<dataMatrix.length; i++) {
 		for(j=0; j<dataMatrix[i].length; j++) {
 			if(dataMatrix[i][j] == 1) {
-				console.log(i,j);
+				const row = i+1;
+				const col = j+1;
+				const x = row*50;
+				const y = col*50;
+				ctx.fillStyle = 'green';
+				ctx.fillRect(y-50, x-50, 50, 50);
 			}
 		}
 	}
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
 // canvas click handler
+// just finds the exact cell that was clicked and calls the toggleCell function
 function canvasClickHandler(e) {
 	const elemLeft = canvas.offsetLeft + canvas.clientLeft;
     const elemTop = canvas.offsetTop + canvas.clientTop;
@@ -95,3 +100,7 @@ function toggleCell(row, col) {
 	drawGrid();
 }
 
+/* TODO
+	1. function to detect how many 
+
+ */
