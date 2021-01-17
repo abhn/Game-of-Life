@@ -47,8 +47,58 @@ function main() {
 
 
 
-
-
+// returns the number of living neighbours a cell has
+function numberOfNeighbours(row, col) {
+	let count = 0;
+	/*
+	|_|_|_|_|_
+	|_|a|b|c|_
+	|_|d|1|e|_
+	|_|f|g|h|_
+	|_|_|_|_|_
+	a = row-1, col-1
+	b = row-1, col
+	c = row-1, col+1
+	d = row, col-1
+	e = row, col+1
+	f = row+1, col-1
+	g = row+1, col
+	h = row+1, col+1
+	*/
+	// a
+	if(row > 0 && col > 0 && dataMatrix[row-1][col-1] == 1) {
+		count += 1;
+	}
+	// b
+	if(row > 0 && dataMatrix[row-1][col] == 1) {
+		count += 1;
+	}
+	// c
+	if(row > 0 && col < COLS && dataMatrix[row-1][col+1] == 1) {
+		count += 1;
+	}
+	// d
+	if(col > 0 && dataMatrix[row][col-1] == 1) {
+		count += 1;
+	}
+	// e
+	if(col < COLS && dataMatrix[row][col+1] == 1) {
+		count += 1;
+	}
+	// f
+	if(row < ROWS && col > 0 && dataMatrix[row+1][col-1] == 1) {
+		count += 1;
+	}
+	// g
+	if(row < ROWS && dataMatrix[row+1][col] == 1) {
+		count += 1;
+	}
+	// h
+	if(row < ROWS && col < COLS && dataMatrix[row+1][col+1] == 1) {
+		count += 1;
+	}
+	console.log(count);
+}
 
 // clears the canvas and renders a fresh grid with dead/living cells
 function drawGrid() {
@@ -89,18 +139,21 @@ function canvasClickHandler(e) {
 	const y = e.pageY - elemTop;
 	const col = Math.ceil(x/50), 
 		  row = Math.ceil(y/50);
-	toggleCell(row, col);
+	toggleCell(row-1, col-1);
 	
 }
 
 // given a row and col index, 
 // toggles that cell from dead to alive or vice versa
 function toggleCell(row, col) {
-	dataMatrix[row-1][col-1] = (dataMatrix[row-1][col-1] + 1) % 2;
+	dataMatrix[row][col] = (dataMatrix[row][col] + 1) % 2;
+	numberOfNeighbours(row, col);
 	drawGrid();
 }
 
 /* TODO
-	1. function to detect how many 
+	1. function to detect how many living neighbours a cell has
+
+ 
 
  */
