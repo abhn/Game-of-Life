@@ -31,6 +31,10 @@ const WIDTH_Y = (END_X - START_X) / COLS;
 // elements
 const canvas = document.querySelector('#gol-canvas');
 const stepBtn = document.querySelector('#step');
+const startBtn = document.querySelector('#start');
+const pauseBtn = document.querySelector('#pause');
+const resetBtn = document.querySelector('#reset');
+const intervalInput = document.querySelector('#interval');
 
 const ctx = canvas.getContext('2d');
 ctx.fillStyle = '#333';
@@ -38,6 +42,11 @@ ctx.fillStyle = '#333';
 // event handlers
 canvas.addEventListener('click', canvasClickHandler);
 stepBtn.addEventListener('click', stepGenerationHandler);
+startBtn.addEventListener('click', startClickHandler);
+pauseBtn.addEventListener('click', pauseClickHandler);
+resetBtn.addEventListener('click', resetClickHandler);
+
+let TIMEOUT_ID;
 
 let dataMatrix = [];
 
@@ -46,8 +55,6 @@ resetMatrixToZero(dataMatrix);
 function main() {
 	drawGrid();
 }
-
-
 
 // handles click of step button
 function stepGenerationHandler() {
@@ -207,4 +214,19 @@ function resetMatrixToZero(matrix) {
 			matrix[i][j] = 0;
 		}
 	}
+}
+
+function startClickHandler() {
+	pauseClickHandler(TIMEOUT_ID);
+	TIMEOUT_ID = window.setInterval(stepGenerationHandler, intervalInput.value);
+}
+
+function pauseClickHandler() {
+	window.clearTimeout(TIMEOUT_ID);
+}
+
+function resetClickHandler() {
+	pauseClickHandler();
+	resetMatrixToZero(dataMatrix);
+	drawGrid();
 }

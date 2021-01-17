@@ -23,10 +23,14 @@
 
 		<br/><br/>
 
-		<button>start</button>
-		<button>pause</button>
+		<button id="start">start</button>
+		<button id="pause">pause</button>
 		<button id="step">step generation</button>
-		<button>reset</button>
+		<button id="reset">reset</button>
+		<br/><br/>
+		<label for="interval">Generation step interval in ms: </label>
+		<input type="range" id="interval" value="500" min="200" max="1000" oninput="document.querySelector('#intervalLabel').innerHTML = this.value;"/>
+		<em id="intervalLabel">500</em>
 
 	</div>
 <script src="script.js"></script>
