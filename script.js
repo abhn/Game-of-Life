@@ -40,6 +40,7 @@ stepBtn.addEventListener('click', stepGenerationHandler);
 startBtn.addEventListener('click', startClickHandler);
 pauseBtn.addEventListener('click', pauseClickHandler);
 resetBtn.addEventListener('click', resetClickHandler);
+intervalInput.addEventListener('input', startClickHandler);
 
 let TIMEOUT_ID;
 
@@ -164,16 +165,6 @@ function numberOfNeighbours(row, col) {
 function drawGrid() {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-	// render grid lines
-	for(i=1; i<ROWS; i++) {
-		ctx.beginPath();
-		ctx.moveTo(i*WIDTH_X, START_Y);
-		ctx.lineTo(i*WIDTH_X, END_Y);
-		ctx.moveTo(START_X, i*WIDTH_Y);
-		ctx.lineTo(END_X, i*WIDTH_Y);
-		ctx.stroke();
-	}
-
 	// render alive cells from dataMatrix
 	for(i=0; i<dataMatrix.length; i++) {
 		for(j=0; j<dataMatrix[i].length; j++) {
@@ -187,6 +178,17 @@ function drawGrid() {
 			}
 		}
 	}
+
+	// render grid lines
+	for(i=1; i<ROWS; i++) {
+		ctx.beginPath();
+		ctx.moveTo(i*WIDTH_X, START_Y);
+		ctx.lineTo(i*WIDTH_X, END_Y);
+		ctx.moveTo(START_X, i*WIDTH_Y);
+		ctx.lineTo(END_X, i*WIDTH_Y);
+		ctx.stroke();
+	}
+
 }
 
 

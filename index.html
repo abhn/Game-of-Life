@@ -31,13 +31,22 @@
 		<button id="step">step generation</button>
 		<button id="reset">reset</button>
 		<br/><br/>
-		<label for="interval">Generation step interval in ms: </label>
+		<label for="interval">Generation step interval in milliseconds (200 - 1000ms): </label>
 		<input type="range" id="interval" value="500" min="200" max="1000" oninput="document.querySelector('#intervalLabel').innerHTML = this.value;"/>
 		<em id="intervalLabel">500</em>
 
 		<h3>Starting simulation</h3>
 		<p>
-			Click on a cell to give it life, click it again to mark it dead. Click "Start" button to start the simulation. 
+			Click on a cell to give it life, click it again to mark it dead. Click "Start" button to start the evolution simulation. 
+		</p>
+		<p>
+			"Pause" the evolution at any point, make changes and click "start" to resume simulation from that point.
+		</p>
+		<p>
+			Change the "Generation step interval" value to speedup or slowdown the lifetime of each generation.
+		</p>
+		<p>
+			"Reset" to go back to a blank slate.
 		</p>
 
 		<h3>Rules of the simulation</h3>
