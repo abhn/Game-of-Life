@@ -164,16 +164,18 @@ function numberOfNeighbours(row, col) {
 // clears the canvas and renders a fresh grid with dead/living cells
 function drawGrid() {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
+	let areAllCellsDead = true;
 
 	// render alive cells from dataMatrix
 	for(i=0; i<dataMatrix.length; i++) {
 		for(j=0; j<dataMatrix[i].length; j++) {
 			if(dataMatrix[i][j] == 1) {
+				areAllCellsDead = false;
 				const row = i+1;
 				const col = j+1;
 				const x = row*50;
 				const y = col*50;
-				ctx.fillStyle = 'green';
+				ctx.fillStyle = `rgb(0,${Math.abs(255-(GENERATION_COUNT*5))}, 0)`;
 				ctx.fillRect(y-50, x-50, 50, 50);
 			}
 		}
@@ -188,7 +190,9 @@ function drawGrid() {
 		ctx.lineTo(END_X, i*WIDTH_Y);
 		ctx.stroke();
 	}
-
+	if(areAllCellsDead) {
+		pauseClickHandler();
+	}
 }
 
 

@@ -32,8 +32,9 @@
 		<button id="reset">reset</button>
 		<br/><br/>
 		<label for="interval">Generation step interval in milliseconds (200 - 1000ms): </label>
-		<input type="range" id="interval" value="500" min="200" max="1000" oninput="document.querySelector('#intervalLabel').innerHTML = this.value;"/>
-		<em id="intervalLabel">500</em>
+		<br/>
+		<input type="range" id="interval" value="200" min="200" max="1000" oninput="document.querySelector('#intervalLabel').innerHTML = this.value+'ms';"/>
+		<em id="intervalLabel">default: 200ms</em>
 
 		<h3>Starting simulation</h3>
 		<p>
