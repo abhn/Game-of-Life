@@ -9,6 +9,13 @@
 	    Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
  */
 
+/* TODO
+	1. function to detect how many living neighbours a cell has [done]
+    2. implement step function to step into the next generation
+ 
+
+ */
+
 window.onload = main;
 
 // board - 500x500
@@ -21,20 +28,20 @@ const END_Y = 500;
 const WIDTH_X = (END_Y - START_Y) / ROWS;
 const WIDTH_Y = (END_X - START_X) / COLS;
 
+// elements
 const canvas = document.querySelector('#gol-canvas');
+const stepBtn = document.querySelector('#step');
+
 const ctx = canvas.getContext('2d');
 ctx.fillStyle = '#333';
 
+// event handlers
 canvas.addEventListener('click', canvasClickHandler);
+stepBtn.addEventListener('click', stepGenerationHandler);
 
 let dataMatrix = [];
 
-for(i=0; i<ROWS; i++) {
-	dataMatrix[i] = [];
-	for(j=0; j<COLS; j++) {
-		dataMatrix[i][j] = 0;
-	}
-}
+resetMatrixToZero(dataMatrix);
 
 function main() {
 	drawGrid();
@@ -42,12 +49,54 @@ function main() {
 
 
 
+// handles click of step button
+function stepGenerationHandler() {
+	let newDataMatrix = [];
+	resetMatrixToZero(newDataMatrix);
+	for(i=0; i<ROWS; i++) {
+		for(j=0; j<COLS; j++) {
+			newDataMatrix[i][j] = decideIfCellAliveInNextGen(i, j, dataMatrix[i][j]);
+		}
+	}
+	dataMatrix = newDataMatrix;
+	drawGrid();
+}
 
 
-
-
+// decide if a cell should be alive in the next generation
+function decideIfCellAliveInNextGen(row, col, isAlive) {
+	if(isAlive) {		
+		switch(numberOfNeighbours(row, col)) {
+			case 0:
+			case 1:
+				return 0;
+				break;
+			case 2:
+			case 3:
+				return 1;
+				break;
+			case 4: 
+			case 5: 
+			case 6: 
+			case 7: 
+			case 8:
+				return 0;
+				break
+			default:
+				return 0; 
+		}
+	}
+	// for the dead cell to regenerate
+	else {
+		if(numberOfNeighbours(row, col) == 3) {
+			return 1;
+		}
+	}
+	return 0;
+}
 
 // returns the number of living neighbours a cell has
+// zero indexed
 function numberOfNeighbours(row, col) {
 	let count = 0;
 	/*
@@ -74,7 +123,7 @@ function numberOfNeighbours(row, col) {
 		count += 1;
 	}
 	// c
-	if(row > 0 && col < COLS && dataMatrix[row-1][col+1] == 1) {
+	if(row > 0 && col < COLS-1 && dataMatrix[row-1][col+1] == 1) {
 		count += 1;
 	}
 	// d
@@ -82,22 +131,23 @@ function numberOfNeighbours(row, col) {
 		count += 1;
 	}
 	// e
-	if(col < COLS && dataMatrix[row][col+1] == 1) {
+	if(col < COLS-1 && dataMatrix[row][col+1] == 1) {
 		count += 1;
 	}
 	// f
-	if(row < ROWS && col > 0 && dataMatrix[row+1][col-1] == 1) {
+	if(row < ROWS-1 && col > 0 && dataMatrix[row+1][col-1] == 1) {
 		count += 1;
 	}
 	// g
-	if(row < ROWS && dataMatrix[row+1][col] == 1) {
+	if(row < ROWS-1 && dataMatrix[row+1][col] == 1) {
 		count += 1;
 	}
 	// h
-	if(row < ROWS && col < COLS && dataMatrix[row+1][col+1] == 1) {
+	if(row < ROWS-1 && col < COLS-1 && dataMatrix[row+1][col+1] == 1) {
 		count += 1;
 	}
-	console.log(count);
+	console.log(row, col, count);
+	return count;
 }
 
 // clears the canvas and renders a fresh grid with dead/living cells
@@ -147,13 +197,14 @@ function canvasClickHandler(e) {
 // toggles that cell from dead to alive or vice versa
 function toggleCell(row, col) {
 	dataMatrix[row][col] = (dataMatrix[row][col] + 1) % 2;
-	numberOfNeighbours(row, col);
 	drawGrid();
 }
 
-/* TODO
-	1. function to detect how many living neighbours a cell has
-
- 
-
- */
+function resetMatrixToZero(matrix) {
+	for(i=0; i<ROWS; i++) {
+		matrix[i] = new Array(COLS);
+		for(j=0; j<COLS; j++) {
+			matrix[i][j] = 0;
+		}
+	}
+}
