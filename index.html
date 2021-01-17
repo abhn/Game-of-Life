@@ -6,6 +6,7 @@
 	<style>
 		canvas {
 			border: 2px solid #333;
+			cursor: pointer;
 		}
 
 		.container {
@@ -23,6 +24,8 @@
 
 		<br/><br/>
 
+		<h3>Generation counter: <span id="generation-count">0</span></h3>
+
 		<button id="start">start</button>
 		<button id="pause">pause</button>
 		<button id="step">step generation</button>
@@ -31,13 +34,21 @@
 		<label for="interval">Generation step interval in ms: </label>
 		<input type="range" id="interval" value="500" min="200" max="1000" oninput="document.querySelector('#intervalLabel').innerHTML = this.value;"/>
 		<em id="intervalLabel">500</em>
-		<h3>Rules of the simulation:</h3>
+
+		<h3>Starting simulation</h3>
+		<p>
+			Click on a cell to give it life, click it again to mark it dead. Click "Start" button to start the simulation. 
+		</p>
+
+		<h3>Rules of the simulation</h3>
 		<ul>
 			<li>Any live cell with fewer than two live neighbours dies, as if by underpopulation.</li>
 			<li>Any live cell with two or three live neighbours lives on to the next generation.</li>
 			<li>Any live cell with more than three live neighbours dies, as if by overpopulation.</li>
 			<li>Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.</li>
 		</ul>
+
+		<h3>Further reading</h3>
 		<p>
 			Read more on <a href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life">Wikipedia</a> or watch this video by <a href="https://www.youtube.com/watch?v=6avJHaC3C2U">Dylan Beattie</a> at around 4:30mins timestamp.
 		</p>

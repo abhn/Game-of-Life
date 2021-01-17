@@ -21,6 +21,8 @@ const END_Y = 500;
 const WIDTH_X = (END_Y - START_Y) / ROWS;
 const WIDTH_Y = (END_X - START_X) / COLS;
 
+let GENERATION_COUNT = 0;
+
 // elements
 const canvas = document.querySelector('#gol-canvas');
 const stepBtn = document.querySelector('#step');
@@ -49,8 +51,17 @@ function main() {
 	drawGrid();
 }
 
+function updateGenerationCount(reset=false) {
+	if(reset) {
+		GENERATION_COUNT = 0;
+	}
+	document.querySelector('#generation-count').innerHTML = GENERATION_COUNT;
+}
+
 // handles click of step button
 function stepGenerationHandler() {
+	GENERATION_COUNT += 1;
+	updateGenerationCount();
 	let newDataMatrix = [];
 	resetMatrixToZero(newDataMatrix);
 	for(i=0; i<ROWS; i++) {
@@ -219,6 +230,7 @@ function pauseClickHandler() {
 
 function resetClickHandler() {
 	pauseClickHandler();
+	updateGenerationCount(true);
 	resetMatrixToZero(dataMatrix);
 	drawGrid();
 }
